@@ -23,6 +23,7 @@ const arrDifficulties = [100, 81, 49];
 let arrBombs = [];
 let bombs = [];
 const NUM_BOMBS = 16;
+let points = 0;
 
 btnStart.addEventListener('click', play)
 
@@ -43,6 +44,7 @@ function play(){
     const grid = document.createElement('div');
     grid.className = 'grid';
     
+
     //bombe
     bombs = generateBombs(cellNumbers);
     console.log(bombs);
@@ -81,7 +83,11 @@ function generateCells(cellNumbers, id, bombs){
         }
     
         if (this.isBomb) {    //todo
-            bombUp()
+            end();
+        }else{
+            points++;
+            cell.removeEventListener('click', generateCells);
+            console.error(points, 'punto');
         }
     
         console.warn(this.cellId);
@@ -92,6 +98,10 @@ function generateCells(cellNumbers, id, bombs){
 
 function reset(){
     main.innerHTML= '';
+    points = 0;
+    arrBombs = [];
+    bombs = [];
+    document.querySelector('.endMessage').innerHTML = '';
 }
 
 
@@ -115,6 +125,17 @@ function getRandomNumber(min, max){
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function bombUp(){
+function end(isWin){
+    const endGame = document.createElement('div');
+    endGame.className = 'end-game';
+    main.append(endGame);
 
+    const cells = document.getElementsByClassName('cell');
+    let endMessageStr = ''
+    if (isWin) {
+        endMessageStr = `Hai vinto! ${points} punti su ${cells.length - NUM_BOMBS}`
+    }else{
+        endMessageStr = `Hai perso. ${points} punti su ${cells.length - NUM_BOMBS}`
+    }
+    document.querySelector('.endMessage').innerHTML = endMessageStr;
 }
