@@ -21,6 +21,7 @@ const cell = document.createElement('div');                // celle
 
 const arrDifficulties = [100, 81, 49];
 let arrBombs = [];
+let bombs = [];
 const NUM_BOMBS = 16;
 
 btnStart.addEventListener('click', play)
@@ -43,12 +44,12 @@ function play(){
     grid.className = 'grid';
     
     //bombe
-    const bombs = generateBombs(cellNumbers);
+    bombs = generateBombs(cellNumbers);
     console.log(bombs);
 
     // crea le celle con un numero compreso tra 1 e il numero massimo predefinito dalla difficoltà
     for (let i = 1; i <= cellNumbers; i++) {
-        const cell = generateCells(cellNumbers, i);
+        const cell = generateCells(cellNumbers, i, bombs);
         grid.append(cell);
     }
     
@@ -63,22 +64,30 @@ function generateGrid(cellsNumber){
     
 }
 
-function generateCells(cellNumbers, id){
+function generateCells(cellNumbers, id, bombs){
     //genero la cella con numero corrispondente alla variabile i
     const cell = document.createElement('div');
     cell.className = 'cell';
     cell.classList.add('square' + cellNumbers);
     cell.cellId = id;
+
     cell.innerHTML = `<span>${id}</span>`;
-    cell.addEventListener('click', clickCells);
+
+    // invece di creare una nuova funzione esterna l'ho creata internamente e anonimamente, e mostra le bombe
+    cell.addEventListener('click', function() {
+        if (bombs.includes(id)) {
+            cell.isBomb = true;
+            cell.classList.add('bomb');
+        }
+    
+        if (this.isBomb) {    //todo
+            bombUp()
+        }
+    
+        console.warn(this.cellId);
+        this.classList.add('clicked');
+    });
     return cell;
-}
-
-function clickCells(){
-
-
-    console.log(this.cellId);
-    this.classList.add('clicked');
 }
 
 function reset(){
@@ -96,6 +105,7 @@ function generateBombs(cellNumbers){
 
         //la bomba viene pushata solo se quello spazio non è già occupato
         if(!bombs.includes(bomb)) bombs.push(bomb);
+        console.log(this,'sono una bomba');
     }
     
     return bombs;
@@ -103,4 +113,8 @@ function generateBombs(cellNumbers){
 
 function getRandomNumber(min, max){
     return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+function bombUp(){
+
 }
