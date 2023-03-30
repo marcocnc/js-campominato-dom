@@ -39,6 +39,7 @@ function play(){
     generateGrid(cellNumbers);
     const grid = document.createElement('div');
     grid.className = 'grid';
+    
 
     for (let i = 1; i <= cellNumbers; i++) {
         const cell = generateCells(cellNumbers, i);
@@ -63,6 +64,14 @@ function generateCells(cellNumbers, id){
     cell.classList.add('square' + cellNumbers);
     cell.cellId = id;
     cell.innerHTML = `<span>${id}</span>`;
-
+    cell.addEventListener('click', clickCells)
+    console.log(cell);
     return cell;
+}
+
+function clickCells(){
+
+
+
+    this.classList.add('clicked');
 }
