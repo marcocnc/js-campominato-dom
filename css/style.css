@@ -101,3 +101,7 @@ select{
 .clicked{
     background-color: rgb(121, 255, 255);
 }
+
+.bomb{
+    background-color: #630000;
+}
