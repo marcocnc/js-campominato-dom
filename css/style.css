@@ -6,7 +6,7 @@
 
 body{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    
+    color: white;
 }
 
 header{
@@ -71,7 +71,7 @@ select{
 }
 
 
-.square{
+.cell{
     width: calc(100% / 10);
     height: calc(100% / 10);
     aspect-ratio: 1 / 1;
@@ -82,8 +82,19 @@ select{
     align-items: center;
 }
 
-.hide{
-    display: none;
+.square100{
+    width: calc(100% / 10);
+    height: calc(100% / 10);
+}
+
+.square81{
+    width: calc(100% / 9);
+    height: calc(100% / 9);
+}
+
+.square49{
+    width: calc(100% / 7);
+    height: calc(100% / 7);
 }
 
 .clicked{

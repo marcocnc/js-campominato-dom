@@ -16,10 +16,10 @@ const btnStart  = document.querySelector('.btn-start');
 const main = document.querySelector('.game');
 const select = document.querySelector('#level');
 
-const cells = document.getElementsByClassName('cell');
+const cells = document.getElementsByClassName('square');
 const cell = document.createElement('div');                // celle
 
-const cellsNumber = [100, 81, 49];
+const arrDifficulties = [100, 81, 49];
 
 
 btnStart.addEventListener('click', play)
@@ -34,21 +34,35 @@ function play(){
 
     // reset();
 
-    generateGrid(cellsNumber);
+    const cellNumbers = arrDifficulties[select.value];
 
-    for (let i = 0; i < cellsNumber[select.value]; i++) {
-        cell.classList = 'square';
-        
+    generateGrid(cellNumbers);
+    const grid = document.createElement('div');
+    grid.className = 'grid';
+
+    for (let i = 1; i <= cellNumbers; i++) {
+        const cell = generateCells(cellNumbers, i);
+        grid.append(cell);
     }
-
+    
+    main.append(grid);
 }
 
 
-function generateGrid(){
+function generateGrid(cellsNumber){
     //creo la griglia
     const grid = document.createElement('div');
     
     grid.className = 'grid';
     
-    main.append(grid);
+}
+
+function generateCells(cellNumbers, id){
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.classList.add('square' + cellNumbers);
+    cell.cellId = id;
+    cell.innerHTML = `<span>${id}</span>`;
+
+    return cell;
 }
